@@ -10,4 +10,6 @@ Tutorial_6: 액티비티 화면 전환 (Activity Change)
 Tutorial_7: 유튜브 API 연동(Youtube API)  
 Tutorial_8: 버튼 이미지 애니메이션(Image Button)  
 Tutorial_9: 이미지 슬라이더(Image Slider)  
-Tutorial_10: 레이아웃(Layout) (※No example project)
+Tutorial_10: 레이아웃(Layout) (※No example project)  
+
+Management(Tutorial_11 ~ Tutorial_20): 회원 가입 & 로그인 프로젝트 (User Management Project)
