@@ -26,7 +26,7 @@ public class ManagementActivity extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.listView);
         userList = new ArrayList<User>();
-        adapter = new UserListAdapter(getApplicationContext(), userList);
+        adapter = new UserListAdapter(getApplicationContext(), userList, this);
         listView.setAdapter(adapter);
 
         try {
@@ -41,7 +41,8 @@ public class ManagementActivity extends AppCompatActivity {
                 userName = object.getString("userName");
                 userAge = object.getString("userAge");
                 User user = new User(userID, userPassword, userName, userAge);
-                userList.add(user);
+                if(!userID.equals("admin"))
+                    userList.add(user);
                 count++;
             }
         }

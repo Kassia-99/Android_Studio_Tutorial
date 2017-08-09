@@ -1,10 +1,19 @@
 package com.example.sungwookang.management;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -15,10 +24,12 @@ import java.util.List;
 public class UserListAdapter extends BaseAdapter {
     private Context context;
     private List<User> userList;
+    private Activity parentActivity;
 
-    public UserListAdapter(Context context, List<User> userList) {
+    public UserListAdapter(Context context, List<User> userList, Activity parentActivity) {
         this.context = context;
         this.userList = userList;
+        this.parentActivity = parentActivity;
     }
     @Override
     public int getCount() {
@@ -36,10 +47,10 @@ public class UserListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup parent) {
+    public View getView(final int i, View view, ViewGroup parent) {
         View v = View.inflate(context, R.layout.user, null);
 
-        TextView userID = (TextView) v.findViewById(R.id.userID);
+        final TextView userID = (TextView) v.findViewById(R.id.userID);
         TextView userPassword = (TextView) v.findViewById(R.id.userPassword);
         TextView userName = (TextView) v.findViewById(R.id.userName);
         TextView userAge = (TextView) v.findViewById(R.id.userAge);
@@ -50,6 +61,32 @@ public class UserListAdapter extends BaseAdapter {
         userAge.setText(userList.get(i).getUserAge());
 
         v.setTag(userList.get(i).getUserID());
+
+        Button deleteButton = (Button) v.findViewById(R.id.deleteButton);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success = jsonResponse.getBoolean("success");
+                            if(success) {
+                                userList.remove(i);
+                                notifyDataSetChanged();
+                            }
+                        }
+                        catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                DeleteRequest deleteRequest = new DeleteRequest(userID.getText().toString(), responseListener);
+                RequestQueue queue = Volley.newRequestQueue(parentActivity);
+                queue.add(deleteRequest);
+            }
+        });
         return v;
     }
 }
