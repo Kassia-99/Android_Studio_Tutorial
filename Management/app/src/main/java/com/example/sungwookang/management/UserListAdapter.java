@@ -36,7 +36,7 @@ public class UserListAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View convertView, ViewGroup parent) {
+    public View getView(int i, View view, ViewGroup parent) {
         View v = View.inflate(context, R.layout.user, null);
 
         TextView userID = (TextView) v.findViewById(R.id.userID);
