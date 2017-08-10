@@ -8,6 +8,12 @@
     android:background="#d1d1d1"
     tools:context="com.example.sungwookang.management.ManagementActivity">
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/search"
+        android:hint="@string/검색"/>
+
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
